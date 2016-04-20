@@ -2,11 +2,11 @@ properties = []
 sides = []
 
 print "Enter side a: "
-sides << gets.to_i
+sides << gets.to_f
 print "Enter side b: "
-sides << gets.to_i
+sides << gets.to_f
 print "Enter side c: "
-sides << gets.to_i
+sides << gets.to_f
 
 if sides.uniq.size == 1
   properties << "equilateral"
