@@ -1,6 +1,5 @@
-months = %w( January February March April May June July August September
-             October November December )
-days_number = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-days_in_months = Hash[months.zip(days_number)]
+days_in_months = { January: 31, February: 28, March: 31, April: 30, May: 31,
+                   June: 30, July: 31, August: 31, September: 30, October: 31,
+                   November: 30, December: 31 }
 puts 'The months in which 30 days:'
 days_in_months.each { |month, days| puts month if days == 30 }
