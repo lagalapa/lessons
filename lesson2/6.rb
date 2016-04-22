@@ -1,4 +1,4 @@
-products = Hash.new { |hash, key| hash[key] = {} }
+products = {}
 total_result = 0
 
 loop do
@@ -9,8 +9,7 @@ loop do
   quantity = gets.to_f
   print 'Enter the price: '
   price = gets.to_f
-  products[product_name][:quantity] = quantity
-  products[product_name][:price] = price
+  products[product_name] = { quantity: quantity, price: price }
 end
 
 products.each do |product, attrs|
