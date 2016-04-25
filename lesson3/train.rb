@@ -44,20 +44,6 @@ class Train
     end
   end
   
-  def next_and_previous_stations
-    if @route != nil && (@current_station != @route.stations.last)
-      if @route.stations.include?(@current_station)
-        current_station_index = @route.stations.find_index(@current_station)
-        @next_station = @route.stations[current_station_index + 1]
-        if current_station_index > 0 
-          @previous_station = @route.stations[current_station_index - 1]
-        end
-      else
-        @next_station = @route.stations.first
-      end
-    end
-  end
-
   def move
     @current_station.send(self, @next_station) if next_station
   end
