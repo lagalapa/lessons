@@ -4,10 +4,6 @@ class Train
     @type = type
     @wagons = wagons
     @speed = 0
-    @route = nil
-    @current_station = nil
-    @previous_station = nil
-    @next_station = nil
   end
   
   attr_accessor :speed, :current_station
@@ -26,9 +22,31 @@ class Train
     @wagons -= 1 if @speed == 0
   end
   
+  def current_station_index
+    if @route && @route.stations.include?(@current_station)
+        @route.stations.find_index(@current_station)
+    end
+  end
+  
+  def next_station
+    if @route && @current_station != @route.stations.last
+      if @route.stations.include?(@current_station)
+        @next_station = @route.stations[current_station_index + 1]
+      else
+        @next_station = @route.stations.first
+      end
+    end
+  end
+  
+  def previous_station
+    if current_station_index && current_station_index > 0
+      @previous_station = @route.stations[current_station_index - 1]
+    end
+  end
+  
   def next_and_previous_stations
-    if @route != nil && @current_station != @route.stations.last
-      if @route.stations.include? @current_station
+    if @route != nil && (@current_station != @route.stations.last)
+      if @route.stations.include?(@current_station)
         current_station_index = @route.stations.find_index(@current_station)
         @next_station = @route.stations[current_station_index + 1]
         if current_station_index > 0 
@@ -41,15 +59,13 @@ class Train
   end
 
   def move
-    next_and_previous_stations
-    @current_station.send(self, @next_station)
+    @current_station.send(self, @next_station) if next_station
   end
   
   def show_near
-    next_and_previous_stations
-    previous_s = @previous_station == nil ? "None" : @previous_station.name
-    current_s = @current_station == nil ? "None" : @current_station.name
-    next_s = @next_station == nil ? "None" : @next_station.name
+    previous_s = previous_station ? @previous_station.name : "None"
+    current_s = @current_station ? @current_station.name : "None"
+    next_s = next_station ? @next_station.name : "None"
     puts "Previous station: #{previous_s}"
     puts "Current station: #{current_s}"
     puts "Next station: #{next_s}"
