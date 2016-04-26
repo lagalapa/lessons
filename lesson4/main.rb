@@ -43,24 +43,40 @@ loop do
     number = gets.chomp
     print 'Wagons number: '
     wagons_number = gets.to_i
-    trains[number].add_wagons(wagons_number)
+    if trains[number]
+      trains[number].add_wagons(wagons_number)
+    else
+      puts 'Train does not exist'
+    end
   when 4
     print 'Train number: '
     number = gets.chomp
     print 'Wagons number: '
     wagons_number = gets.to_i
-    trains[number].remove_wagons(wagons_number)
+    if trains[number]
+      trains[number].remove_wagons(wagons_number)
+    else
+      puts 'Train does not exist'
+    end
   when 5
     print 'Train number: '
     number = gets.chomp
     print 'Station name: '
     name = gets.chomp
-    stations[name].add(trains[number])
+    if stations[name] && trains[number]
+      stations[name].add(trains[number])
+    else
+      puts 'Station or train do not exist'
+    end
   when 6
     stations.each_key { |name| puts name }
   when 7
     print 'Station name: '
     name = gets.chomp
-    stations[name].show
+    if stations[name]
+      stations[name].show
+    else
+      puts 'Station does not exist'
+    end
   end
 end
