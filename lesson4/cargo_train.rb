@@ -1,9 +1,8 @@
 class CargoTrain < Train
-  
-  #переопределяем new_wagon  
+  #переопределяем new_wagon
   #та же область что и в родительском классе
   protected
-  
+
   #вспомогательный метод, не нужен извне
   def new_wagon
     PassengerWagon.new
