@@ -60,7 +60,7 @@ class Train
 
   # вспомогательный, не нужен извне
   def acceptable?(wagon)
-    wagon.class.ancestors.include? Wagon
+     (self.class == Train) && (wagon.class.ancestors.include? Wagon)
   end
 
   #тоже вспомогательный, не нужен извне
