@@ -6,6 +6,7 @@ class Train
   def initialize(number, wagons)
     @number = number
     @speed = 0
+    @wagons = []
     @wagons = wagons if wagons.all? { |wagon| acceptable?(wagon) }
   end
 
