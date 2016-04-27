@@ -1,10 +1,6 @@
 class PassengerTrain < Train
-  #переопределяем new_wagon
-  #та же область что и в родительском классе
-  protected
-
-  #вспомогательный метод, не нужен извне
-  def new_wagon
-    PassengerWagon.new
+  #используется извне
+  def add_wagons(wagons_number)
+    wagons_number.times { |_i| @wagons << PassengerWagon.new }
   end
 end

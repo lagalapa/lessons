@@ -6,15 +6,15 @@ class Train
   def initialize(number, wagons_number)
     @number = number
     @speed = 0
+    @wagons = []
     add_wagons(wagons_number)
   end
 
   #используется извне класса
   def add_wagons(wagons_number)
-    @wagons = [] if @wagons.nil?
-    @wagons.fill(0...wagons_number) { |_i| new_wagon }
+    wagons_number.times { |_i| @wagons << Wagon.new }
   end
-  
+
   #используется извне класса
   def remove_wagons(wagons_number)
     @wagons.pop(wagons_number)
@@ -57,11 +57,6 @@ class Train
 
   #у нас есть подклассы поэтому используем protected
   protected
-
-  #вспомогательный метод, не должен быть изпользован извне
-  def new_wagon
-    Wagon.new
-  end
 
   #тоже вспомогательный, не нужен извне
   def current_station_index
