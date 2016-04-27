@@ -3,16 +3,15 @@ class Train
   attr_reader   :number, :wagons
   attr_writer   :route
 
-  def initialize(number, wagons_number)
+  def initialize(number, wagons)
     @number = number
     @speed = 0
-    @wagons = []
-    add_wagons(wagons_number)
+    @wagons = wagons if wagons.all? { |wagon| acceptable?(wagon) }
   end
 
   #используется извне класса
-  def add_wagons(wagons_number)
-    wagons_number.times { |_i| @wagons << Wagon.new }
+  def add_wagon(wagon)
+    @wagons << wagon if acceptable?(wagon)
   end
 
   #используется извне класса
@@ -57,6 +56,11 @@ class Train
 
   #у нас есть подклассы поэтому используем protected
   protected
+
+  # вспомогательный, не нужен извне
+  def acceptable?(wagon)
+    wagon.class.ancestors.include? Wagon
+  end
 
   #тоже вспомогательный, не нужен извне
   def current_station_index

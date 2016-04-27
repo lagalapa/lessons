@@ -7,7 +7,7 @@ class Menu
   def run
     loop do
       puts
-      puts '1) Make s station'
+      puts '1) Make a station'
       puts '2) Make a train'
       puts '3) Add wagons to a train'
       puts '4) Remove wagons from train'
@@ -52,9 +52,19 @@ class Menu
     wagons_number = gets.to_i
     print 'Type (passenger/cargo): '
     type = gets.chomp
-    train = PassengerTrain.new(number, wagons_number) if type == 'passenger'
-    train = CargoTrain.new(number, wagons_number) if type == 'cargo'
+    case type
+    when 'passenger'
+      train = PassengerTrain.new(number, wagons(type, wagons_number))
+    when 'cargo'
+      train = CargoTrain.new(number, wagons(type, wagons_number))
+    end
     @trains[number] = train
+  end
+
+  def wagons(type, quantity)
+    wagon_class = PassengerWagon if type == 'passenger'
+    wagon_class = CargoWagon if type == 'cargo'
+    [].fill(0...quantity) { |_i| wagon_class.new }
   end
 
   def add_wagons
@@ -63,7 +73,9 @@ class Menu
     print 'Wagons number: '
     wagons_number = gets.to_i
     if @trains[number]
-      @trains[number].add_wagons(wagons_number)
+      wagon_class = PassengerWagon if @trains[number].class == PassengerTrain
+      wagon_class = CargoWagon if @trains[number].class == CargoTrain
+      wagons_number.times { |_i| @trains[number].add_wagon(wagon_class.new) }
     else
       puts 'Train does not exist'
     end
