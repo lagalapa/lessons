@@ -5,17 +5,17 @@ class Route
     @stations = [first, last]
   end
 
-  #используется извне
+  # используется извне
   def add(station)
     @stations.insert(-2, station)
   end
 
-  #используется извне
+  # используется извне
   def remove(station)
     @stations.delete(station)
   end
 
-  #используется извне
+  # используется извне
   def show
     @stations.each { |station| puts station.name }
   end

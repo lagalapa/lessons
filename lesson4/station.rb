@@ -6,13 +6,13 @@ class Station
     @trains = []
   end
 
-  #используется извне
+  # используется извне
   def add(train)
     @trains << train
     train.current_station = self
   end
 
-  #используется извне
+  # используется извне
   def show(type = nil)
     if type
       trains = @trains.select { |train| train.class.to_s == type }
@@ -25,7 +25,7 @@ class Station
     end
   end
 
-  #используется извне
+  # используется извне
   def send(train, station)
     @trains.delete(train)
     station.add(train)
