@@ -6,8 +6,7 @@ class Train
   def initialize(number, wagons)
     @number = number
     @speed = 0
-    @wagons = []
-    @wagons = wagons if wagons.all? { |wagon| acceptable?(wagon) }
+    @wagons = set_wagons(wagons)
   end
 
   #используется извне класса
@@ -57,6 +56,11 @@ class Train
 
   #у нас есть подклассы поэтому используем protected
   protected
+
+  #вспомогательный, не используется извне класса
+  def set_wagons(wagons)
+    wagons.all? { |wagon| acceptable?(wagon) } ? wagons : []
+  end
 
   # вспомогательный, не нужен извне
   def acceptable?(wagon)
