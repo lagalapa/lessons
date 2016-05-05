@@ -1,25 +1,13 @@
 class PassengerWagon < Wagon
-  attr_reader :seats, :seats_free
-
-  def initialize(seats)
-    @seats = seats
-    @seats_free = @seats
-    validate!
-  end
-
-  def take_seat
-    raise 'No more seats' if @seats_free == 0
-    @seats_free -= 1
-  end
-
-  def seats_taken
-    @seats - @seats_free
+  def take
+    raise ArgumentError, 'No more seats' if @units_free == 0
+    @units_free -= 1
   end
 
   protected
 
   def validate!
-    unless @seats.is_a?(Integer) && @seats >= 0
+    unless @units.is_a?(Integer) && @units >= 0
       raise ArgumentError, 'Wrong seats argument'
     end
     true

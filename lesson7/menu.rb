@@ -105,6 +105,8 @@ class Menu
     quantity.times { |_i| @trains[id].add_wagon(wagon_class.new(units)) }
   rescue RuntimeError => e
     puts e.message
+  rescue ArgumentError => e
+    puts e.message
   end
 
   def remove_wagons
@@ -158,11 +160,11 @@ class Menu
     print 'Wagon number: '
     index = gets.to_i
     raise 'Wagon not found' if train.wagons[index].nil?
-    train.wagons[index].take_seat if train.class == PassengerTrain
+    train.wagons[index].take if train.class == PassengerTrain
     if train.class == CargoTrain
       print 'Volume: '
       volume = gets.to_f
-      train.wagons[index].take_volume(volume)
+      train.wagons[index].take(volume)
     end
   rescue RuntimeError => e
     puts e.message
