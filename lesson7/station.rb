@@ -13,7 +13,7 @@ class Station
   end
 
   def each(&block)
-    @trains.each { |train| block.call(train) }
+    @trains.each { |train| yield(train) }
   end
 
   def add(train)

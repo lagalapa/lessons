@@ -23,7 +23,7 @@ class Train
   end
 
   def each(&block)
-    @wagons.each { |wagon| block.call(wagon) }
+    @wagons.each { |wagon| yield(wagon) }
   end
 
   def add_wagon(wagon)

@@ -135,7 +135,7 @@ class Menu
     name = gets.chomp
     station = @stations[name]
     raise 'Station not found' if station.nil?
-    station.each &show_train
+    station.each(&show_train)
   rescue RuntimeError => e
     puts e.message
   end
@@ -145,7 +145,7 @@ class Menu
     id = gets.chomp
     train = @trains[id]
     raise 'Train not found' if train.nil?
-    train.each &show_wagon(train)
+    train.each(&show_wagon(train))
   rescue RuntimeError => e
     puts e.message
   end
