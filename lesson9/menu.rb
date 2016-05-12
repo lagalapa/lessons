@@ -49,16 +49,11 @@ class Menu
     quantity = wagons_quantity
     print 'Type (passenger/cargo): '
     type = gets.chomp
-    case type
-    when 'passenger'
-      seats = seats_amount
-      train = PassengerTrain.new(id, wagons(type, quantity, seats))
-    when 'cargo'
-      volume = volume_amount
-      train = CargoTrain.new(id, wagons(type, quantity, volume))
-    else
-      raise 'Wrong train type'
-    end
+    var = { "passenger" => PassengerTrain, "cargo" => CargoTrain }
+    raise 'Wrong train type' unless var[type]
+    units = seats_amount if type == "passenger"
+    units = volume_amount if type == "cargo"
+    train = var[type].new(id, wagons(type, quantity, units))
     @trains[id] = train
   rescue RuntimeError => e
     puts e.message

@@ -20,11 +20,3 @@ module Accessors
     end
   end
 end
-
-# class X
-#   extend Accessors
-
-#   attr_accessor_with_history :myvar, :a, :bb
-#   strong_attr_accessor :lol, Float
-# end
-

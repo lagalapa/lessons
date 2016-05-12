@@ -61,7 +61,7 @@ class Train
   end
 
   def move
-    @current_station.send(self, @next_station) if next_station
+    @current_station.send_train(self, @next_station) if next_station
   end
 
   def show_near_stations

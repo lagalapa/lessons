@@ -38,16 +38,16 @@ stations.each do |station|
   end
 end
 
-# class Test
-#   extend Accessors
+class Test
+  extend Accessors
 
-#   attr_accessor_with_history :a
-#   strong_attr_accessor :b, Float
-# end
+  attr_accessor_with_history :a
+  strong_attr_accessor :b, Float
+end
 
-#   test = Test.new
-#   test.a = 8
-#   test.a = 9
-#   test.a = 'hello'
-#   puts test.a
-#   puts test.a_with_history
+test = Test.new
+test.a = 8
+test.a = 9
+test.a = 'hello'
+puts test.a
+puts test.a_history

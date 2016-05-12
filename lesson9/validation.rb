@@ -5,39 +5,18 @@ module Validation
   end
 
   module ClassMethods
-    attr_accessor :validations
-
-    def validate(attr_name, validation_type, *args)
-      case validation_type
-      when :presence
-        define_method("#{attr_name}_#{validation_type}".to_sym) do
-          eval("raise '@#{attr_name} cannot be nil or empty' if @#{attr_name}.to_s.empty?")
-        end
-      when :format
-        define_method("#{attr_name}_#{validation_type}".to_sym) do
-          eval("raise '@#{attr_name} have wrong format' if @#{attr_name} !~ args[0]")
-        end
-      when :type
-        define_method("#{attr_name}_#{validation_type}".to_sym) do
-          eval("raise '@#{attr_name} have wrong class' if @#{attr_name}.class != args[0]")
-        end
-      end
-
+    def validate(name, type, *args)
       @validations ||= []
-      @validations << "#{attr_name}_#{validation_type}".to_sym
-
-      # class << self
-      #   attr_accessor :validations
-      # end
+      @validations << { name: name, type: type, args: args }
     end
+
+    attr_reader :validations
   end
 
   module InstanceMethods
     def validate!
-      validations = self.class.validations
-      validations ||= []
-      validations.each do |method|
-        eval("#{method}")
+      self.class.validations.each do |val|
+        send "validate_#{val[:type]}", val[:name], val[:args]
       end
       true
     end
@@ -47,13 +26,21 @@ module Validation
     rescue
       false
     end
+
+    private
+
+    def validate_presence(name, *_args)
+      raise "@#{name} cannot be empty" if instance_variable_get("@#{name}").to_s.empty?
+    end
+
+    def validate_format(name, args)
+      regex = args[0]
+      raise "@#{name} have wrong format" if instance_variable_get("@#{name}") !~ regex
+    end
+
+    def validate_type(name, args)
+      type = args[0]
+      raise "@#{name} have wrong class" unless instance_variable_get("@#{name}").class.ancestors.include? type
+    end
   end
 end
-
-# class X
-#   include Validation
-#   attr_accessor :a, :b, :c, :d
-#   validate :a, :presence
-#   validate :b, :format, /\d/
-#   validate :a, :type, Fixnum
-# end

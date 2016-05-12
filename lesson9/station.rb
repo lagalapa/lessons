@@ -29,7 +29,7 @@ class Station
     train.current_station = self
   end
 
-  def send(train, station)
+  def send_train(train, station)
     station.add(train)
     @trains.delete(train)
   end
